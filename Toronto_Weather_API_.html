@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Toronto Data</title>
+</head>
+
+<body>
+  <!-- Retrieved data will be displayed here -->
+  <div class="city"></div>
+  <div class="wind"></div>
+  <div class="humidity"></div>
+  <div class="temp"></div>
+  <div class="description"></div>
+	<div class="icon"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  
+    // Put our API key here
+    var APIKey = "166a433c57516f51dfab1f7edaed8413";
+
+    // Choose whether to call by city name or coordinates
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+      "q=Toronto,Canada&units=metric&appid=" + APIKey;
+	
+	// these coordinates are set to Toronto Canada by default	  
+//var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=43.6532&lon=79.3832&appid=" + APIKey;
+
+    // Here we run our AJAX call to the OpenWeatherMap API
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      // We store all of the retrieved data inside of an object called "response"
+      .then(function(response) {
+
+        // declaring icon variables
+        var iconCode = response.weather[0].icon;
+        var iconURL = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+
+        // Log the queryURL
+        console.log(queryURL);
+
+        // Log the resulting object
+        console.log(response);
+
+        // Transfer content to HTML
+        $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+        $(".wind").text("Wind Speed: " + response.wind.speed);
+        $(".humidity").text("Humidity: " + response.main.humidity);
+        $(".temp").text("Temperature (C) " + response.main.temp);
+        $(".description").text("Weather Outlook:" + response.weather[0].description);
+		    $(".icon").html("<img src=" + iconURL + ">");
+
+        // Log the data in the console as well
+        console.log("Wind Speed: " + response.wind.speed);
+        console.log("Humidity: " + response.main.humidity);
+        console.log("Temperature (F): " + response.main.temp);
+
+      });
+  </script>
+</body>
+
+</html>
