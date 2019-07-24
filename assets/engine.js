@@ -29,14 +29,13 @@ function initMap() {
         zoom: 15
       });
       bounds.extend(pos);
-
+      new google.maps.Marker({position: pos, map: map});
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
 
-      // Call Places Nearby Search on user's location
-      //getNearbyPlaces(pos);
+
     }, () => {
       // Browser supports geolocation, but user has denied permission
       handleLocationError(true, infoWindow);
@@ -73,9 +72,6 @@ function deleteMarkers() {
     }
     allMarkers = [];
 }
-
-// create 2d array indexed with restaurant name and content marker allMarkers[restaurant][0] = marker
-// when list div clicked, google.maps.event.trigger(allMarkers[restaurant],'click')
 
 
 // Handle a geolocation error
@@ -134,8 +130,7 @@ function getNearbyPlaces(position, key) {
             for (var i = 0; i < place.price_level; i++){
                 price += "$";
             }
-    
-            
+                
             if (price != ""){
                 rate.textContent = `${place.rating} \u272e | ${price}`
             }
@@ -150,6 +145,19 @@ function getNearbyPlaces(position, key) {
             item.appendChild(address);
             infoList.appendChild(item);
         });
+
+        //
+        let tags = document.getElementsByTagName('li');
+        for (var i=0;i<tags.length;i++){
+            tags[i].addEventListener('click', function(){
+                for(var i = 0; i < allMarkers.length; i++){
+                    if(allMarkers[i].title == this.children[0].textContent){
+                        console.log("restaurant : " + this.children[0].textContent);
+                        google.maps.event.trigger(allMarkers[i], 'click');
+                    }
+                }
+            });
+        }
       }
 
   
