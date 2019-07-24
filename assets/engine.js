@@ -6,6 +6,8 @@ let currentInfoWindow;
 let service;
 let infoPane;
 let infoList;
+let searchterm;
+let allMarkers = [];
 function initMap() {
   // Initialize variables
   bounds = new google.maps.LatLngBounds();
@@ -34,7 +36,7 @@ function initMap() {
       map.setCenter(pos);
 
       // Call Places Nearby Search on user's location
-      getNearbyPlaces(pos);
+      //getNearbyPlaces(pos);
     }, () => {
       // Browser supports geolocation, but user has denied permission
       handleLocationError(true, infoWindow);
@@ -44,6 +46,37 @@ function initMap() {
     handleLocationError(false, infoWindow);
   }
 }
+
+document.getElementById('sbutton').addEventListener("click", function(event){
+    event.preventDefault();
+    if(allMarkers.length != 0){
+        deleteMarkers();
+    }
+    while (infoPane.lastChild) {
+        infoPane.removeChild(infoPane.lastChild);
+      }
+    searchterm = document.getElementById('searchbar').value.trim();
+    if (searchterm == "" || searchterm == "vegan"){
+        searchterm = 'vegan';
+    }
+    else{
+        searchterm = "(vegan) AND " + `(${searchterm})`
+    }
+    console.log(searchterm);
+
+    getNearbyPlaces(pos, searchterm);
+});
+
+function deleteMarkers() {
+    for (var i = 0; i < allMarkers.length; i++) {
+        allMarkers[i].setMap(null);
+    }
+    allMarkers = [];
+}
+
+// create 2d array indexed with restaurant name and content marker allMarkers[restaurant][0] = marker
+// when list div clicked, google.maps.event.trigger(allMarkers[restaurant],'click')
+
 
 // Handle a geolocation error
 function handleLocationError(browserHasGeolocation, infoWindow) {
@@ -63,14 +96,14 @@ function handleLocationError(browserHasGeolocation, infoWindow) {
   currentInfoWindow = infoWindow;
 
   // Call Places Nearby Search on the default location
-  getNearbyPlaces(pos);
+ // getNearbyPlaces(pos);
 }
 
-function getNearbyPlaces(position) {
+function getNearbyPlaces(position, key) {
     let request = {
       location: position,
       rankBy: google.maps.places.RankBy.DISTANCE,
-      keyword: "(vegan) AND (cafe)"
+      keyword: key
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -127,7 +160,7 @@ function getNearbyPlaces(position) {
         map: map,
         title: place.name
       });
-
+      allMarkers.push(marker);
       /* TODO: Step 4B: Add click listeners to the markers */
       // Add click listener to each marker
       google.maps.event.addListener(marker, 'click', () => {
@@ -146,11 +179,11 @@ function getNearbyPlaces(position) {
       });
 
       // Adjust the map bounds to include the location of this marker
-      bounds.extend(place.geometry.location);
+      //bounds.extend(place.geometry.location);
     });
     /* Once all the markers have been placed, adjust the bounds of the map to
      * show all the markers within the visible area. */
-    map.fitBounds(bounds);
+   // map.fitBounds(bounds);
   }
   
   function showDetails(placeResult, marker, status) {
@@ -219,11 +252,8 @@ function getNearbyPlaces(position) {
       websitePara.appendChild(websiteLink);
       infoPane.appendChild(websitePara);
     }
-    /*
-    for (var i = 0; i < placeResult.reviews.length ; i++){
 
-    }
-    */
+
    placeResult.reviews.forEach(review => {
         let rdetail = document.createElement('div');
         let author = document.createElement('p');
