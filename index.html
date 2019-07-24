@@ -35,9 +35,9 @@
 
 
         <div class="md-form active-cyan-2 mb-3 w-100 d-flex justify-content-center">
-                <input class="form-control w-50" type="text" placeholder="Search" aria-label="Search">
-        
-            </div>
+                <input id="searchbar" class="form-control w-50" type="text" placeholder="Search" aria-label="Search">
+                <button id="sbutton" type="submit" style="width: 32px;height:32px;"><i class="fa fa-search"></i></button>
+        </div>
   
 </div>
 
@@ -46,8 +46,12 @@
 <div class="row parents">
   
     <!--Results Div -->
-<div class="lg-col-4" id="rlist">
+<div class="lg-col-4" id="listbox">
+        <nav>
+                <ul id="rlist">
 
+                </ul>
+        </nav>
     
 
 </div>
@@ -59,7 +63,7 @@
 
 <!--Maps Div-->
 
-<div class="md-col-4 keepmap" id="map">
+<div class="lg-col-4" id="map">
 
 
 </div>
