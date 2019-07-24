@@ -10,8 +10,8 @@ body{
     background-image: url("../assets/images/background1.jpg");
     
     /* Center and scale the image nicely */
-    
-    background-repeat: repeat;
+    background-size: 100%;
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
