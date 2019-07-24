@@ -8,6 +8,7 @@ let infoPane;
 let infoList;
 let searchterm;
 let allMarkers = [];
+let allEvents = [];
 function initMap() {
   // Initialize variables
   bounds = new google.maps.LatLngBounds();
@@ -169,15 +170,36 @@ function getNearbyPlaces(position, key) {
         title: place.name
       });
       allMarkers.push(marker);
-      /* TODO: Step 4B: Add click listeners to the markers */
+
       // Add click listener to each marker
       google.maps.event.addListener(marker, 'click', () => {
+        console.log(marker);
         let request = {
           placeId: place.place_id,
           fields: ['name', 'formatted_address', 'geometry', 'rating',
             'website', 'photos', 'review']
         };
 
+        if (allEvents.length > 0){
+          allEvents[0].directionsDisplay.setMap(null);
+        }
+        var me = this;
+        allEvents.push(me);
+        console.log(me);
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+        this.directionsService.route({
+          origin: pos,
+          destination: marker.position,
+          travelMode: 'WALKING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            me.directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
         /* Only fetch the details of a place when the user clicks on a marker.
          * If we fetch the details for all place results as soon as we get
          * the search response, we will hit API rate limits. */
@@ -193,6 +215,7 @@ function getNearbyPlaces(position, key) {
      * show all the markers within the visible area. */
    // map.fitBounds(bounds);
   }
+  
   
   function showDetails(placeResult, marker, status) {
       console.log(placeResult);
