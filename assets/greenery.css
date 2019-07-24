@@ -41,14 +41,14 @@ padding: 30px;
     }
 
 #listbox, #rinfo{
-    max-height: 301px;
+    /* max-height: 301px;
     max-width: 201px;
     min-height: 299px;
-    min-width: 199px;
+    min-width: 199px; */
 }    
 #map{
     display: flex;
-    position: absolute; 
+    position: relative; 
     right: 2%;
     max-height: 401px;
     max-width: 401px;
@@ -64,8 +64,25 @@ padding: 30px;
 }
 
 nav #rlist{
-    height: 300px;
     list-style: none;
     overflow:auto; 
     overflow-y:scroll;
+}
+
+.info
+{
+position: relative;
+
+
+}
+
+.mainContainer{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.spreader{
+
+    width: 32vw;
 }
