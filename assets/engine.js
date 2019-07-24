@@ -252,7 +252,7 @@ function getNearbyPlaces(position, key) {
       let firstPhoto = placeResult.photos[0];
       let photo = document.createElement('img');
       photo.classList.add('hero');
-      photo.style.width = "200px";
+      photo.style.width = "400px";
       photo.style.height = "300px";
       photo.src = firstPhoto.getUrl();
       infoPane.appendChild(photo);

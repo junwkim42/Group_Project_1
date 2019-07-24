@@ -7,7 +7,8 @@ font-family: cursive;
 
 body{
     background-color: lightgreen;
-    background-image: url("../assets/images/background2.jpg");
+    background-image: url("../assets/images/background1.jpg");
+    
     /* Center and scale the image nicely */
     
     background-repeat: repeat;
