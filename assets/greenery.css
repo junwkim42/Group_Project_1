@@ -30,6 +30,7 @@ body{
     box-shadow: 0 1px 0 0 #2FC80D;
     display: flex;
 justify-content: center;
+background-color: #ffc240;
     }
 
     .searchbar
@@ -73,6 +74,8 @@ nav #rlist{
     overflow-y:scroll;
     max-height: 301px;
     min-height: 299px;  
+    background-color:#f29900;
+    color: white;
 }
 
 .info
