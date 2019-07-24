@@ -95,19 +95,20 @@ position: relative;
 /*   ----   WEATHER  CSS   ----   */
 
 #WeatherOverlay {
-    background-image: radial-gradient(circle at bottom right, grey , white 55%);
+   /*background-image: radial-gradient(circle at bottom right, grey 5%, white 65%);*/
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-content: right;
     text-align: right;
     position: absolute;
     position: fixed;
     color: white;   
     bottom: 0px;
     right: 0px;
-    padding:  0px 10px 10px 0px;
+    padding: 0px 10px 10px 0px;
     font-weight: 500;
     font-size: 15px;
-    /*width: 160px;
-    height: 110px;*/
+    width: 160px;
+    /* height: 150px */
     text-shadow: 1px 1px 2px black;
     z-index: 100;
 }
@@ -122,7 +123,7 @@ position: relative;
 }
 
 #Temp {
-    font-size: 24px;
+    font-size: 30px;
 }
 
 #City {
