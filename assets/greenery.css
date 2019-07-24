@@ -86,3 +86,9 @@ position: relative;
 
     width: 32vw;
 }
+
+.scroll
+{
+
+    overflow: scroll;
+}
