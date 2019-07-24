@@ -40,12 +40,7 @@ padding: 30px;
 
     }
 
-#listbox, #rinfo{
-    /* max-height: 301px;
-    max-width: 201px;
-    min-height: 299px;
-    min-width: 199px; */
-}    
+  
 #map{
     display: flex;
     position: relative; 
@@ -67,6 +62,8 @@ nav #rlist{
     list-style: none;
     overflow:auto; 
     overflow-y:scroll;
+    max-height: 301px;
+    min-height: 299px;  
 }
 
 .info
@@ -90,7 +87,7 @@ position: relative;
 /*   ----   WEATHER  CSS   ----   */
 
 #WeatherOverlay {
-    background-image: radial-gradient(circle at bottom right, grey 5%, white 65%);
+    background-image: radial-gradient(circle at bottom right, grey , white 55%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     align-content: right;
     text-align: right;
@@ -103,9 +100,18 @@ position: relative;
     font-weight: 500;
     font-size: 15px;
     width: 160px;
-    /* height: 150px */
+    /*height: 150px */
     text-shadow: 1px 1px 2px black;
     z-index: 100;
+}
+
+#Icon {
+    position: absolute;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    padding: 0px 0px 10px 10px;
+   
 }
 
 #Temp {
@@ -114,4 +120,8 @@ position: relative;
 
 #City {
     text-transform: uppercase;
+}
+
+ul > li{
+    margin-bottom: 15px;
 }
