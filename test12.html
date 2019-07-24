@@ -40,9 +40,12 @@
         var origin = {lat: 43.6534, lng: -79.3841};
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: 18,
           center: origin
+         
         });
+
+       
         var clickHandler = new ClickEventHandler(map, origin);
       }
 
@@ -89,9 +92,7 @@
         }, function(response, status) {
           if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
+          } 
         });
       };
 
