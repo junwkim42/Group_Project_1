@@ -5,6 +5,7 @@ let infoWindow;
 let currentInfoWindow;
 let service;
 let infoPane;
+let infoList;
 function initMap() {
   // Initialize variables
   bounds = new google.maps.LatLngBounds();
@@ -12,6 +13,7 @@ function initMap() {
   currentInfoWindow = infoWindow;
   /* TODO: Step 4A3: Add a generic sidebar */
   infoPane = document.getElementById('rinfo');
+  infoList = document.getElementById('rlist');
 
   // Try HTML5 geolocation
   if (navigator.geolocation) {
@@ -45,7 +47,7 @@ function initMap() {
 
 // Handle a geolocation error
 function handleLocationError(browserHasGeolocation, infoWindow) {
-  // Set default location to Sydney, Australia
+
   pos = { lat: 43.6543, lng: -79.3860 };
   map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
@@ -79,9 +81,44 @@ function getNearbyPlaces(position) {
   function nearbyCallback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       createMarkers(results);
+      createListItem(results);
+      console.log(results);
     }
   }
   
+    // build list with Name Rating address
+    function createListItem(places){
+        while (infoList.lastChild) {
+            infoList.removeChild(infoList.lastChild);
+        }
+        places.forEach(place => {
+            let item = document.createElement('li');
+            let name = document.createElement('div');
+            let rate = document.createElement('div');
+            let address = document.createElement('div');
+            let price = "";
+
+            for (var i = 0; i < place.price_level; i++){
+                price += "$";
+            }
+    
+            
+            if (price != ""){
+                rate.textContent = `${place.rating} \u272e | ${price}`
+            }
+            else{
+                rate.textContent = `${place.rating} \u272e`
+            }
+            name.textContent = place.name;
+            address.textContent = place.vicinity;
+    
+            item.appendChild(name);
+            item.appendChild(rate);
+            item.appendChild(address);
+            infoList.appendChild(item);
+        });
+      }
+
   
   function createMarkers(places) {
     places.forEach(place => {
@@ -97,7 +134,7 @@ function getNearbyPlaces(position) {
         let request = {
           placeId: place.place_id,
           fields: ['name', 'formatted_address', 'geometry', 'rating',
-            'website', 'photos']
+            'website', 'photos', 'review']
         };
 
         /* Only fetch the details of a place when the user clicks on a marker.
@@ -117,6 +154,7 @@ function getNearbyPlaces(position) {
   }
   
   function showDetails(placeResult, marker, status) {
+      console.log(placeResult);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       let placeInfowindow = new google.maps.InfoWindow();
       let rating = "None";
@@ -133,6 +171,8 @@ function getNearbyPlaces(position) {
   }
 
 
+
+  // details are name pricture website and review
   function showPanel(placeResult) {
     // If infoPane is already open, close it
 
@@ -179,5 +219,42 @@ function getNearbyPlaces(position) {
       websitePara.appendChild(websiteLink);
       infoPane.appendChild(websitePara);
     }
+    /*
+    for (var i = 0; i < placeResult.reviews.length ; i++){
 
+    }
+    */
+   placeResult.reviews.forEach(review => {
+        let rdetail = document.createElement('div');
+        let author = document.createElement('p');
+        let rateNtime = document.createElement('p');
+        let user_text = document.createElement('p');
+        let user_rating = "";
+        let time = review.relative_time_description;
+
+        for(var i = 0; i < review.rating ; i++){
+            user_rating += "\u272e";
+        }
+        author.textContent = review.author_name;
+        rateNtime.textContent = user_rating + "     ||      " + time;
+        user_text.textContent = review.text;
+
+        rdetail.appendChild(author);
+        rdetail.appendChild(rateNtime);
+        rdetail.appendChild(user_text);
+
+        infoPane.appendChild(rdetail);
+
+   });
   }
+
+  // present basic map or get user location without consent
+  // when search button clicked add value to keyword line 71
+  // grab store id from line 82
+  // build list with Name Rating address
+  // detailed info of restaurant WHEN MARKER CLICKED
+  // get info with "place detail request" using store id
+  // details are name pricture website and review
+  // need reviews only from the place detail. other info can be grabbed from line 82
+
+  // When diretion comes add it under click

@@ -40,17 +40,20 @@ padding: 30px;
 
     }
 
-#rlist, #rinfo{
-    min-height: 300px;
-    min-width: 200px;
+#listbox, #rinfo{
+    max-height: 301px;
+    max-width: 201px;
+    min-height: 299px;
+    min-width: 199px;
 }    
 #map{
     display: flex;
     position: absolute; 
-    right: 0%;
-    min-height: 400px;
-    min-width: 400px;
-  
+    right: 2%;
+    max-height: 401px;
+    max-width: 401px;
+    min-height: 399px;
+    min-width: 399px;
 }   
 
 
@@ -59,10 +62,10 @@ padding: 30px;
 
     display: flex;
 }
-.keepmap 
 
-{
-
- flex:1; /*which is equal to 1 portion of width */
-
+nav #rlist{
+    height: 300px;
+    list-style: none;
+    overflow:auto; 
+    overflow-y:scroll;
 }
