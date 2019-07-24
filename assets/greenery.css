@@ -89,18 +89,17 @@ position: relative;
 #WeatherOverlay {
     background-image: radial-gradient(circle at bottom right, grey , white 55%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    align-content: right;
     text-align: right;
     position: absolute;
     position: fixed;
     color: white;   
     bottom: 0px;
     right: 0px;
-    padding: 0px 10px 10px 0px;
+    padding:  0px 10px 10px 0px;
     font-weight: 500;
     font-size: 15px;
-    width: 160px;
-    /*height: 150px */
+    /*width: 160px;
+    height: 110px;*/
     text-shadow: 1px 1px 2px black;
     z-index: 100;
 }
