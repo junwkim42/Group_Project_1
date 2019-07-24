@@ -286,13 +286,3 @@ function getNearbyPlaces(position, key) {
    });
   }
 
-  // present basic map or get user location without consent
-  // when search button clicked add value to keyword line 71
-  // grab store id from line 82
-  // build list with Name Rating address
-  // detailed info of restaurant WHEN MARKER CLICKED
-  // get info with "place detail request" using store id
-  // details are name pricture website and review
-  // need reviews only from the place detail. other info can be grabbed from line 82
-
-  // When diretion comes add it under click
