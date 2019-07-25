@@ -13,7 +13,7 @@ document.getElementById('sbutton').addEventListener("click", function(event){
     }
     clearExsiting();
 
-    searchterm = document.getElementById('searchbar').value.replace('vegan', '').trim();
+    searchterm = document.getElementById('searchbar').value.replace(/vegan/g, '').trim();
     if (searchterm == ""){
         searchterm = 'vegan';
     }
