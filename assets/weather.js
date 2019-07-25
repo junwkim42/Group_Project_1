@@ -78,7 +78,7 @@ $.ajax({
     response = reply;
     console.log(response);
     iconCode = reply.weather[0].icon;
-    iconURL = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+    iconURL = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
     buildicon();
   });
 }
