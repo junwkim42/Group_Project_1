@@ -1,54 +1,49 @@
 h1
 {
-display: flex;
-justify-content: center;
-font-family: cursive;
+    display: flex;
+    justify-content: center;
+    font-family: cursive;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+body{
+    background-color: lightgreen;
+    background-image: url("../assets/images/background1.jpg");
+    
+    /* Center and scale the image nicely */
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
-.search-form {
-    border-radius: 30px 0px 0px 30px;
-    /*border-radius:Top-left, Top-right, Bottom-right, Bottom-left;*/
-}
-/*to cange only one form and not all give unique class name like  class="search-form" */
- .search-btn {
-    border-radius: 0px 30px 30px 0px;
-    cursor:pointer;
-}
 
-    .active-cyan-2 input[type=text]:focus:not([readonly]) {
+    .active-cyan input[type=text] {
     border-bottom: 1px solid #2FC80D;
     box-shadow: 0 1px 0 0 #2FC80D;
     display: flex;
-justify-content: center;
+    justify-content: center;
+    background-color: rgba(242, 153, 0, 0.6);
     }
-
-    .searchbar
-    {
-        display: flex;
-justify-content: center;
-text-align: center;
+    #searchbar{
+        color: black;
+        font-weight: bold;
+        border-radius: 15px;
     }
-
+    #searchbar::placeholder {
+        color: white;
+    }
     .weatherapi
-
     {
-
-float: left;
-padding: 30px;
-
-
+        float: left;
+        padding: 30px;
     }
 
-#listbox, #rinfo{
-    max-height: 301px;
-    max-width: 201px;
-    min-height: 299px;
-    min-width: 199px;
-}    
+  
 #map{
     display: flex;
-    position: absolute; 
+    position: relative; 
     right: 2%;
     max-height: 401px;
     max-width: 401px;
@@ -64,8 +59,106 @@ padding: 30px;
 }
 
 nav #rlist{
-    height: 300px;
     list-style: none;
     overflow:auto; 
     overflow-y:scroll;
+    max-height: 401px;
+    min-height: 399px;  
+    color: white;
+    border-radius: 25px;
+}
+
+nav #reviewlist{
+    list-style: none;
+    overflow:auto; 
+    overflow-y:scroll;
+    max-height: 501px;
+    min-height: 499px;  
+    color: white;
+}
+
+#rinfo {
+    border-radius: 25px;
+    max-height: 401px;
+    min-height: 399px; 
+}
+
+.details, a{
+    line-height: 0.8;
+    margin-left: 10px;
+}
+::-webkit-scrollbar{
+    width: 0px;
+    background: transparent;
+} 
+
+.place {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+#reviewbox{
+    color: white;
+    border-radius: 25px;
+}  
+
+.info
+{
+    position: relative;
+}
+
+.mainContainer{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.spreader{
+
+    width: 32vw;
+}
+
+/*   ----   WEATHER  CSS   ----   */
+
+#WeatherOverlay {
+   /*background-image: radial-gradient(circle at bottom right, grey 5%, white 65%);*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-content: right;
+    text-align: right;
+    position: absolute;
+    position: fixed;
+    color: white;   
+    bottom: 0px;
+    right: 0px;
+    padding: 0px 10px 10px 0px;
+    font-weight: 500;
+    font-size: 15px;
+    width: 160px;
+    /* height: 150px */
+    text-shadow: 1px 1px 2px black;
+    z-index: 100;
+}
+
+
+#Icon {
+    position: absolute;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    padding: 0px 45px 30px 10px;
+   
+}
+
+#Temp {
+    font-size: 30px;
+}
+
+#City {
+    text-transform: uppercase;
+}
+
+ul > li{
+    margin-bottom: 15px;
 }
