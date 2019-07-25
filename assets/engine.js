@@ -5,6 +5,7 @@ let infoWindow;
 let currentInfoWindow;
 let service;
 let infoPane;
+let reviewList;
 let infoList;
 let searchterm;
 let allMarkers = [];
@@ -16,6 +17,7 @@ function initMap() {
   currentInfoWindow = infoWindow;
   /* TODO: Step 4A3: Add a generic sidebar */
   infoPane = document.getElementById('rinfo');
+  reviewList = document.getElementById('reviewlist');
   infoList = document.getElementById('rlist');
 
   // Try HTML5 geolocation
@@ -52,9 +54,11 @@ document.getElementById('sbutton').addEventListener("click", function(event){
     if(allMarkers.length != 0){
         deleteMarkers();
     }
-    while (infoPane.lastChild) {
-        infoPane.removeChild(infoPane.lastChild);
-      }
+    if (allEvents.length > 0){
+      allEvents[0].directionsDisplay.setMap(null);
+    }
+    clearExsiting();
+
     searchterm = document.getElementById('searchbar').value.trim();
     if (searchterm == "" || searchterm == "vegan"){
         searchterm = 'vegan';
@@ -92,8 +96,6 @@ function handleLocationError(browserHasGeolocation, infoWindow) {
   infoWindow.open(map);
   currentInfoWindow = infoWindow;
 
-  // Call Places Nearby Search on the default location
- // getNearbyPlaces(pos);
 }
 
 function getNearbyPlaces(position, key) {
@@ -121,6 +123,7 @@ function getNearbyPlaces(position, key) {
         while (infoList.lastChild) {
             infoList.removeChild(infoList.lastChild);
         }
+        infoList.style.backgroundColor = "#f29900";
         places.forEach(place => {
             let item = document.createElement('li');
             let name = document.createElement('div');
@@ -174,6 +177,7 @@ function getNearbyPlaces(position, key) {
       // Add click listener to each marker
       google.maps.event.addListener(marker, 'click', () => {
         console.log(marker);
+        let tmode = 'WALKING';
         let request = {
           placeId: place.place_id,
           fields: ['name', 'formatted_address', 'geometry', 'rating',
@@ -182,6 +186,13 @@ function getNearbyPlaces(position, key) {
 
         if (allEvents.length > 0){
           allEvents[0].directionsDisplay.setMap(null);
+        }
+        //weatherStatus = "thunderstorm";
+        if (weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
+          tmode = 'TRANSIT';
+        }
+        else{
+          tmode = 'WALKING';
         }
         var me = this;
         allEvents.push(me);
@@ -192,7 +203,7 @@ function getNearbyPlaces(position, key) {
         this.directionsService.route({
           origin: pos,
           destination: marker.position,
-          travelMode: 'WALKING'
+          travelMode: tmode
         }, function(response, status) {
           if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
@@ -240,26 +251,26 @@ function getNearbyPlaces(position, key) {
   function showPanel(placeResult) {
     // If infoPane is already open, close it
 
-    while (infoPane.lastChild) {
-        infoPane.removeChild(infoPane.lastChild);
-      }
-
+    clearExsiting();
     // Clear the previous details
 
     /* TODO: Step 4E: Display a Place Photo with the Place Details */
     // Add the primary photo, if there is one
+    infoPane.style.backgroundColor = "#f29900";
     if (placeResult.photos) {
       let firstPhoto = placeResult.photos[0];
       let photo = document.createElement('img');
       photo.classList.add('hero');
-      photo.style.width = "400px";
-      photo.style.height = "300px";
+      photo.style.width = "100%";
+      photo.style.height = "250px";
+      photo.style.borderRadius = "25px";
+      photo.style.alignSelf = "center";
       photo.src = firstPhoto.getUrl();
       infoPane.appendChild(photo);
     }
 
     // Add place details with text formatting
-    let name = document.createElement('h1');
+    let name = document.createElement('p');
     name.classList.add('place');
     name.textContent = placeResult.name;
     infoPane.appendChild(name);
@@ -284,7 +295,7 @@ function getNearbyPlaces(position, key) {
       infoPane.appendChild(websitePara);
     }
 
-
+    document.getElementById('reviewbox').style.backgroundColor = "#2FC80D";
    placeResult.reviews.forEach(review => {
         let rdetail = document.createElement('div');
         let author = document.createElement('p');
@@ -304,8 +315,18 @@ function getNearbyPlaces(position, key) {
         rdetail.appendChild(rateNtime);
         rdetail.appendChild(user_text);
 
-        infoPane.appendChild(rdetail);
+        reviewList.appendChild(rdetail);
 
    });
   }
 
+function clearExsiting(){
+  while (infoPane.lastChild) {
+    infoPane.removeChild(infoPane.lastChild);
+  }
+  infoPane.style.backgroundColor = "transparent";
+  while (reviewList.lastChild) {
+    reviewList.removeChild(reviewList.lastChild);
+  }
+  document.getElementById('reviewbox').style.backgroundColor = "transparent";
+}

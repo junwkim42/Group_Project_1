@@ -1,8 +1,10 @@
 h1
 {
-display: flex;
-justify-content: center;
-font-family: cursive;
+    display: flex;
+    justify-content: center;
+    font-family: cursive;
+    font-size: 45px;
+    font-weight: bold;
 }
 
 body{
@@ -15,39 +17,27 @@ body{
     background-attachment: fixed;
 }
 
-.search-form {
-    border-radius: 30px 0px 0px 30px;
-    /*border-radius:Top-left, Top-right, Bottom-right, Bottom-left;*/
-}
-/*to cange only one form and not all give unique class name like  class="search-form" */
- .search-btn {
-    border-radius: 0px 30px 30px 0px;
-    cursor:pointer;
-}
 
-    .active-cyan-2 input[type=text]:focus:not([readonly]) {
+
+    .active-cyan input[type=text] {
     border-bottom: 1px solid #2FC80D;
     box-shadow: 0 1px 0 0 #2FC80D;
     display: flex;
-justify-content: center;
-background-color: #ffc240;
+    justify-content: center;
+    background-color: rgba(242, 153, 0, 0.6);
     }
-
-    .searchbar
-    {
-        display: flex;
-justify-content: center;
-text-align: center;
+    #searchbar{
+        color: black;
+        font-weight: bold;
+        border-radius: 15px;
     }
-
+    #searchbar::placeholder {
+        color: white;
+    }
     .weatherapi
-
     {
-
-float: left;
-padding: 30px;
-
-
+        float: left;
+        padding: 30px;
     }
 
   
@@ -72,17 +62,51 @@ nav #rlist{
     list-style: none;
     overflow:auto; 
     overflow-y:scroll;
-    max-height: 301px;
-    min-height: 299px;  
-    background-color:#f29900;
+    max-height: 401px;
+    min-height: 399px;  
+    color: white;
+    border-radius: 25px;
+}
+
+nav #reviewlist{
+    list-style: none;
+    overflow:auto; 
+    overflow-y:scroll;
+    max-height: 501px;
+    min-height: 499px;  
     color: white;
 }
 
+#rinfo {
+    border-radius: 25px;
+    max-height: 401px;
+    min-height: 399px; 
+}
+
+.details, a{
+    line-height: 0.8;
+    margin-left: 10px;
+}
+::-webkit-scrollbar{
+    width: 0px;
+    background: transparent;
+} 
+
+.place {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+#reviewbox{
+    color: white;
+    border-radius: 25px;
+}  
+
 .info
 {
-position: relative;
-
-
+    position: relative;
 }
 
 .mainContainer{
@@ -117,12 +141,13 @@ position: relative;
     z-index: 100;
 }
 
+
 #Icon {
     position: absolute;
     position: fixed;
     bottom: 0px;
-    left: 0px;
-    padding: 0px 0px 10px 10px;
+    right: 0px;
+    padding: 0px 45px 30px 10px;
    
 }
 

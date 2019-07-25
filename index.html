@@ -22,15 +22,15 @@
 <!-- Parent Div for Search Bar-->
 
 <div class="row">
-        <div class="md-form active-cyan-2 mb-3 w-100 d-flex justify-content-center">
-                <input id="searchbar" class="form-control w-50" type="text" placeholder="Search" aria-label="Search">
-                <button id="sbutton" type="submit" style="width: 32px;height:32px;"><i class="fa fa-search"></i></button>
+        <div class="md-form active-cyan active-cyan-2 mb-3 w-100 d-flex justify-content-center">
+                <input id="searchbar" class="form-control w-50" type="text" placeholder=" Find your new favorite!" aria-label="Search">
+                <button id="sbutton" type="submit" style="width: 40px;height:40px;border-radius: 15px;"><i class="fa fa-search"></i></button>
         </div>
 </div>
 
 <!--parent div-->
 
-<div class="container-fluid mainContainer">
+<div class="container-fluid mainContainer" style="margin-bottom:15px;">
     <!--Results Div -->
                 <div class="lg-col-4 spreader" id="listbox">
                         <nav>
@@ -45,6 +45,17 @@
                 <div class="lg-col-4 spreader" id="map"> </div>
 <!-- end of parent div-->
 </div>
+<div class="container-fluid mainContainer">
+        <div class="lg-col-3"></div>
+        <div class="lg-col-6" id="reviewbox">
+                <nav>
+                        <ul id="reviewlist">
+
+                        </ul>
+                </nav>
+        </div>
+        <div class="lg-col-3"></div>
+</div>
 
 <!-- Weather Div  -->
 
@@ -55,8 +66,10 @@
         <div id='Temp' class="temp"></div>
         <div id='City' class="city"></div>
         <div id='Description' class="description"></div>
+        <div id="weatherMsg"></div>
     </div>
-</div> 
+</div>
+
 
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="   crossorigin="anonymous"></script>

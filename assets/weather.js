@@ -1,7 +1,7 @@
 
 
 var APIKey = "d1c9275e14261ab240fbf7eb6420e249";
-
+var weatherStatus;
 
 // Choose whether to call by city name or coordinates
 var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
@@ -33,6 +33,13 @@ $.ajax({
     $(".temp").text(response.main.temp + "°C");
     $(".description").text(response.weather[0].description);
     $(".icon").html("<img src=" + iconURL + ">");
+    weatherStatus = response.weather[0].description.toLowerCase();
+    if (weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
+      document.getElementById("weatherMsg").textContent = "Public transit recommended";
+    }
+    else{
+      document.getElementById("weatherMsg").textContent = "Great weather for walking!";
+    }
     //$(".wind").text("Wind Speed: " + response.wind.speed);
     //$(".humidity").text("Humidity: " + response.main.humidity);
 
