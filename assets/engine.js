@@ -129,6 +129,7 @@ function getNearbyPlaces(position, key) {
             let name = document.createElement('div');
             let rate = document.createElement('div');
             let address = document.createElement('div');
+            let dline = document.createElement('HR');
             let price = "";
 
             for (var i = 0; i < place.price_level; i++){
@@ -142,12 +143,19 @@ function getNearbyPlaces(position, key) {
                 rate.textContent = `${place.rating} \u272e`
             }
             name.textContent = place.name;
+            name.style.fontWeight = "bold";
             address.textContent = place.vicinity;
-    
+            dline.style.backgroundColor = "white";
+            dline.style.height = "3px";
+            dline.style.width = "80%";
+            dline.style.marginLeft = "0px";
             item.appendChild(name);
             item.appendChild(rate);
             item.appendChild(address);
             infoList.appendChild(item);
+            if(place != places[19]){
+              infoList.appendChild(dline);
+            }
         });
 
         //
@@ -181,7 +189,7 @@ function getNearbyPlaces(position, key) {
         let request = {
           placeId: place.place_id,
           fields: ['name', 'formatted_address', 'geometry', 'rating',
-            'website', 'photos', 'review']
+            'website', 'photos', 'review', 'opening_hours']
         };
 
         if (allEvents.length > 0){
@@ -220,11 +228,11 @@ function getNearbyPlaces(position, key) {
       });
 
       // Adjust the map bounds to include the location of this marker
-      //bounds.extend(place.geometry.location);
+      bounds.extend(place.geometry.location);
     });
     /* Once all the markers have been placed, adjust the bounds of the map to
      * show all the markers within the visible area. */
-   // map.fitBounds(bounds);
+    map.fitBounds(bounds);
   }
   
   
@@ -269,21 +277,40 @@ function getNearbyPlaces(position, key) {
       infoPane.appendChild(photo);
     }
 
+    //calculate current day of week 
+    var d = new Date();
+    var n = d.getDay();
+    console.log("current day : " + n);
+    n = n - 1;
+    if (n < 0){
+      n = 6;
+    }
     // Add place details with text formatting
     let name = document.createElement('p');
+    let isOpen = document.createElement('p');
+    let hours = document.createElement('p');
     name.classList.add('place');
     name.textContent = placeResult.name;
-    infoPane.appendChild(name);
+    
     if (placeResult.rating) {
-      let rating = document.createElement('p');
-      rating.classList.add('details');
-      rating.textContent = `Rating: ${placeResult.rating} \u272e`;
-      infoPane.appendChild(rating);
+      name.textContent += ` \u272e${placeResult.rating}`;
     }
-    let address = document.createElement('p');
-    address.classList.add('details');
-    address.textContent = placeResult.formatted_address;
-    infoPane.appendChild(address);
+    if (placeResult.opening_hours.open_now){
+      isOpen.textContent = "Open";
+      isOpen.style.color = "#2FC80D";
+    }
+    else {
+      isOpen.textContent = "Closed at this moment";
+      isOpen.style.color = "red";
+    }
+    isOpen.style.fontWeight = "bold";
+    isOpen.classList.add('details');
+    hours.classList.add('details');
+    hours.textContent = placeResult.opening_hours.weekday_text[n];
+
+    infoPane.appendChild(name);
+    infoPane.appendChild(isOpen);
+    infoPane.appendChild(hours);
     if (placeResult.website) {
       let websitePara = document.createElement('p');
       let websiteLink = document.createElement('a');
@@ -308,9 +335,13 @@ function getNearbyPlaces(position, key) {
             user_rating += "\u272e";
         }
         author.textContent = review.author_name;
+        author.style.marginTop = "8px";
+        author.style.fontWeight = "bold";
+        author.style.fontSize = "15px";
         rateNtime.textContent = user_rating + "     ||      " + time;
+        rateNtime.style.marginBottom = "0px";
         user_text.textContent = review.text;
-
+        user_text.style.marginTop = "0px";
         rdetail.appendChild(author);
         rdetail.appendChild(rateNtime);
         rdetail.appendChild(user_text);
