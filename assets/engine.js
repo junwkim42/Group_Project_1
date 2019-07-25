@@ -1,53 +1,7 @@
-let pos;
-let map;
-let bounds;
-let infoWindow;
-let currentInfoWindow;
-let service;
-let infoPane;
-let reviewList;
-let infoList;
 let searchterm;
 let allMarkers = [];
 let allEvents = [];
-function initMap() {
-  // Initialize variables
-  bounds = new google.maps.LatLngBounds();
-  infoWindow = new google.maps.InfoWindow;
-  currentInfoWindow = infoWindow;
-  /* TODO: Step 4A3: Add a generic sidebar */
-  infoPane = document.getElementById('rinfo');
-  reviewList = document.getElementById('reviewlist');
-  infoList = document.getElementById('rlist');
 
-  // Try HTML5 geolocation
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-      pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: pos,
-        zoom: 15
-      });
-      bounds.extend(pos);
-      new google.maps.Marker({position: pos, map: map});
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
-      infoWindow.open(map);
-      map.setCenter(pos);
-
-
-    }, () => {
-      // Browser supports geolocation, but user has denied permission
-      handleLocationError(true, infoWindow);
-    });
-  } else {
-    // Browser doesn't support geolocation
-    handleLocationError(false, infoWindow);
-  }
-}
 
 document.getElementById('sbutton').addEventListener("click", function(event){
     event.preventDefault();
