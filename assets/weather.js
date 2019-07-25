@@ -95,7 +95,7 @@ $.ajax({
     $(".description").text(response.weather[0].description);
     $(".icon").html("<img src=" + iconURL + ">");
     weatherStatus = response.weather[0].description.toLowerCase();
-    if (weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
+    if (weatherStatus.includes("drizzle") || weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
       document.getElementById("weatherMsg").textContent = "Public transit recommended";
     }
     else{

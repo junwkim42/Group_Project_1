@@ -150,7 +150,7 @@ function getNearbyPlaces(position, key) {
           allEvents[0].directionsDisplay.setMap(null);
         }
         //weatherStatus = "thunderstorm";
-        if (weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
+        if (weatherStatus.includes("drizzle") || weatherStatus.includes("rain") || weatherStatus.includes("storm") || weatherStatus.includes("snow")){
           tmode = 'TRANSIT';
         }
         else{
