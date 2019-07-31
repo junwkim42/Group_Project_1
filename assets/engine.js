@@ -1,6 +1,4 @@
-let searchterm;
-let allMarkers = [];
-let allEvents = [];
+
 
 
 document.getElementById('sbutton').addEventListener("click", function(event){
