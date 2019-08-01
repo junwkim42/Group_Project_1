@@ -1,6 +1,8 @@
 
-
-
+// addEventLister('sbutton') : When 'sbutton' clicked, remove all Markers, Directions and restaurant list and info if they were already existing.
+//                             Retrieve searchterm from searchbar. 
+//                             Remove 'vegan' from searchterm. Vegan will be added in a format demanded by Google Map Places API.
+//                             Call getNearbyPlaces() with coordinates (pos) saved from initMap() and formatted searchterm 
 document.getElementById('sbutton').addEventListener("click", function(event){
     event.preventDefault();
     if(allMarkers.length != 0){
@@ -23,6 +25,7 @@ document.getElementById('sbutton').addEventListener("click", function(event){
     getNearbyPlaces(pos, searchterm);
 });
 
+// deleteMarkers() : remove existing markers from the map and set allMarkers[] to empty array.
 function deleteMarkers() {
     for (var i = 0; i < allMarkers.length; i++) {
         allMarkers[i].setMap(null);
@@ -31,7 +34,10 @@ function deleteMarkers() {
 }
 
 
-// Handle a geolocation error
+// handleLocationError() : Handle a geolocation error
+//                         browserHasGeolocation is true = user browser supports geolocation but user didnt agree on consent to use his/her current location
+//                         browserHasGeolocation is false = user browser does not support geolocation.
+//                         In either case, open map with default coordinates (toronto downtown)  
 function handleLocationError(browserHasGeolocation, infoWindow) {
 
   pos = { lat: 43.6543, lng: -79.3860 };
@@ -49,7 +55,10 @@ function handleLocationError(browserHasGeolocation, infoWindow) {
   currentInfoWindow = infoWindow;
 
 }
-
+// getNearbyPlaces() : make place request to Google Map Places API
+//                     request consists of position (current position or default), order by closest distance 
+//                     and with keyword from 'sbutton' eventListner (vegan + user input)
+//                     Call service.nearbySearch() and pass the response and nearbyCallback() 
 function getNearbyPlaces(position, key) {
     let request = {
       location: position,
@@ -61,7 +70,10 @@ function getNearbyPlaces(position, key) {
     service.nearbySearch(request, nearbyCallback);
   }
 
-
+//nearbyCallback() : results and status passed from nearbySearch call.
+//                   if Google Map Places API returned valid status, 
+//                    call createMarkers() and pass results obtained from request
+//                    call creatListItem() and pass the results obtained from request
   function nearbyCallback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       createMarkers(results);
@@ -70,7 +82,7 @@ function getNearbyPlaces(position, key) {
     }
   }
   
-    // build list with Name Rating address
+    // createListItem() : build restaurant list with Name Rating address pulled out from data obtained with getNearbyPlaces
     function createListItem(places){
         while (infoList.lastChild) {
             infoList.removeChild(infoList.lastChild);
@@ -110,7 +122,7 @@ function getNearbyPlaces(position, key) {
             }
         });
 
-        //
+        // for each restaurant list item, set trigger such that clicking on the list item is equivalent to clicking Markers associated with that restaurant 
         let tags = document.getElementsByTagName('li');
         for (var i=0;i<tags.length;i++){
             tags[i].addEventListener('click', function(){
@@ -124,7 +136,13 @@ function getNearbyPlaces(position, key) {
         }
       }
 
-  
+//createMarkers() : createMarkers with data from getNearbyPlaces and push each marker to allMarkers[]
+//                  add click event listener to each marker
+//                  when marker is clicked, it will request details of the place through Google Map Places API
+//                  it will also make a call to Google Map Directions service to draw directions to that restaurant from current location
+//                  From previous weatherAPI call, if weatherStatus is set to one of rain, storm, drizzle, snow, make directions request with
+//                  keyword 'TRANSIT' which will display the direction in public transit route
+//                  else make Directions request using 'WALKING'
   function createMarkers(places) {
     places.forEach(place => {
       let marker = new google.maps.Marker({
@@ -187,7 +205,7 @@ function getNearbyPlaces(position, key) {
     map.fitBounds(bounds);
   }
   
-  
+  // showDetails(): Display restaurant's name and rating on a small pop-up that appears when user clicks on a marker
   function showDetails(placeResult, marker, status) {
       console.log(placeResult);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -207,15 +225,13 @@ function getNearbyPlaces(position, key) {
 
 
 
-  // details are name pricture website and review
+  
+  // showPanel(): Display restaurant picture, name, rating, open status and daily hours.
+  //              styles are added upon element creation.
   function showPanel(placeResult) {
     // If infoPane is already open, close it
-
     clearExsiting();
     // Clear the previous details
-
-    /* TODO: Step 4E: Display a Place Photo with the Place Details */
-    // Add the primary photo, if there is one
     infoPane.style.backgroundColor = "#f29900";
     if (placeResult.photos) {
       let firstPhoto = placeResult.photos[0];
@@ -233,6 +249,8 @@ function getNearbyPlaces(position, key) {
     var d = new Date();
     var n = d.getDay();
     console.log("current day : " + n);
+    //getDay counts Sunday as 0 and Saturday as 6, whereas Google Map Places Details counts Monday as 0 and Sunday as 6
+    // subtracting 1 is necessary to grab current day's operating hours from the API
     n = n - 1;
     if (n < 0){
       n = 6;
@@ -273,7 +291,7 @@ function getNearbyPlaces(position, key) {
       websitePara.appendChild(websiteLink);
       infoPane.appendChild(websitePara);
     }
-
+// create a list of 5 reviews in the 'reviewbox' html element
     document.getElementById('reviewbox').style.backgroundColor = "#2FC80D";
    placeResult.reviews.forEach(review => {
         let rdetail = document.createElement('div');
@@ -303,6 +321,7 @@ function getNearbyPlaces(position, key) {
    });
   }
 
+// clearExisting(): remove existing information from restauraunt detail and reviewlist and set background color to transparent.
 function clearExsiting(){
   while (infoPane.lastChild) {
     infoPane.removeChild(infoPane.lastChild);
