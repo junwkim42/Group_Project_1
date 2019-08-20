@@ -14,7 +14,7 @@
 // searchterm : search keyword input from user. Fetched from 'searchbar' when 'sbutton' is clicked.
 // allMarkers: array that stores all 20 markers of each restaurant. When the user makes a new search, old markers will be referenced through this array to be removed from the map.
 // allEvents: array that stores direction event from Google Maps Directions API. When the user clicks on a new marker, blue path(direction) line from current location to old marker gets referenced through this array to be removed from the map.
-var APIKey = "d1c9275e14261ab240fbf7eb6420e249";
+var APIKey = "Your key";
 var weatherStatus;
 var response;
 var iconCode;
